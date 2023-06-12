@@ -1,5 +1,5 @@
 #include "logger.h"
-#include "timestamp.h"
+#include "timeStamp.h"
 Logger &Logger::GetInstance()
 {
     static Logger ins;
@@ -29,5 +29,5 @@ void Logger::log(std::string msg)
         break;
     }
     // 打印事件和msg
-    std::cout << TimeStamp::now().toString() << " : " << msg << std::endl;
+    std::cout << timeStamp::now().toString() << " : " << msg << std::endl;
 }
