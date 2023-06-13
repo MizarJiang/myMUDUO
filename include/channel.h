@@ -110,7 +110,7 @@ public:
     {
         return index_;
     }
-    int setIndex(int index)
+    void setIndex(int index)
     {
         index_ = index;
     }

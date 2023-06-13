@@ -49,7 +49,7 @@ private:
 #define LOG_WARN(logmsgFormat, ...)                       \
     do                                                    \
     {                                                     \
-        Logger logger = Logger::GetInstance();            \
+        Logger &logger = Logger::GetInstance();           \
         logger.setLevel(WARN);                            \
         char buf[1024] = {0};                             \
         snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
@@ -59,7 +59,7 @@ private:
 #define LOG_ERROR(logmsgFormat, ...)                      \
     do                                                    \
     {                                                     \
-        Logger logger = Logger::GetInstance();            \
+        Logger &logger = Logger::GetInstance();           \
         logger.setLevel(ERROR);                           \
         char buf[1024] = {0};                             \
         snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
@@ -69,11 +69,12 @@ private:
 #define LOG_FATAL(logmsgFormat, ...)                      \
     do                                                    \
     {                                                     \
-        Logger logger = Logger::GetInstance();            \
+        Logger &logger = Logger::GetInstance();           \
         logger.setLevel(FATAL);                           \
         char buf[1024] = {0};                             \
         snprintf(buf, 1024, logmsgFormat, ##__VA_ARGS__); \
         logger.log(buf);                                  \
+        exit(EXIT_FAILURE);                               \
     } while (0)
 
 #ifdef DEBUG
