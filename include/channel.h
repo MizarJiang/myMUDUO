@@ -17,29 +17,6 @@ public:
     typedef std::function<void()> EventCallback;
     typedef std::function<void(timeStamp)> ReadEventCallback;
 
-private:
-    static const int kNoneEvent;
-    static const int kReadEvent;
-    static const int kWriteEvent;
-
-    eventLoop *loop_;
-    const int fd_; // 监听的对象
-
-    int events_;  // 注册fd反省去的事件
-    int revents_; // poller返回的具体发生的事件
-
-    int index_;
-
-    std::weak_ptr<void> tie_;
-    bool tied_;
-
-    // 因为channel通道里面能够获知fd最终发生的具体时间revents
-    // 所以负责调用具体时间的回调
-    ReadEventCallback readCallBack_;
-    EventCallback writeCallBack_;
-    EventCallback closeCallBack_;
-    EventCallback errorCallBack_;
-
 public:
     Channel(eventLoop *loop, int fd);
     ~Channel();
@@ -78,7 +55,7 @@ public:
         return events_;
     }
 
-    int set_revents(int revt)
+    void set_revents(int revt)
     {
         revents_ = revt;
     }
@@ -148,4 +125,27 @@ public:
 private:
     void update();
     void handleEventWithGuard(timeStamp receiveTime);
+
+private:
+    static const int kNoneEvent;
+    static const int kReadEvent;
+    static const int kWriteEvent;
+
+    eventLoop *loop_;
+    const int fd_; // 监听的对象
+
+    int events_;  // 注册fd反省去的事件
+    int revents_; // poller返回的具体发生的事件
+
+    int index_;
+
+    std::weak_ptr<void> tie_;
+    bool tied_;
+
+    // 因为channel通道里面能够获知fd最终发生的具体时间revents
+    // 所以负责调用具体时间的回调
+    ReadEventCallback readCallBack_;
+    EventCallback writeCallBack_;
+    EventCallback closeCallBack_;
+    EventCallback errorCallBack_;
 };

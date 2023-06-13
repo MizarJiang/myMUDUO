@@ -16,10 +16,6 @@ enum LogLevel
 
 class Logger : noncopyable
 {
-private:
-    int loglevel_;
-    Logger(){};
-
 public:
     // 因为继承了noncopyable，无法拷贝实例，所以这里的单例返回值应该为&
     static Logger &GetInstance();
@@ -27,6 +23,10 @@ public:
     void setLevel(LogLevel level);
     // 写日志
     void log(std::string msg);
+
+private:
+    int loglevel_;
+    Logger(){};
 };
 
 // 定义宏
