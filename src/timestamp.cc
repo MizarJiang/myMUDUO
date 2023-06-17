@@ -25,9 +25,9 @@ std::string timeStamp::toString()
 
 // 测试代码：
 
-int main()
-{
-    timeStamp time;
-    std::cout << time.now().toString() << std::endl;
-    return 0;
-}
+// int main()
+// {
+//     timeStamp time;
+//     std::cout << time.now().toString() << std::endl;
+//     return 0;
+// }
