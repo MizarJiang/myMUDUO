@@ -10,6 +10,7 @@
 #include <mutex>
 // 原子操作
 #include <atomic>
+#include <memory>
 // 事件循环类，主要包含了两个模块：channel epoller
 
 class Channel;
@@ -22,6 +23,8 @@ public:
     typedef std::vector<Channel *> ChannelList;
 
 private:
+    void handleRead();         // wake up
+    void doPendingFunctors();  // 执行回调
     std::atomic_bool looping_; // 原子操作，通过CAS实现
     std::atomic_bool quit_;    // 标志退出事件循环
 
@@ -34,11 +37,10 @@ private:
     timeStamp pollReturnTime_; // poller返回发生事件的channels的时间点
     std::unique_ptr<Poller> poller_;
 
-    int wakeupFd; // 使用eventfd创建，当mainloop获取一个新用户的channel，使用轮询选择一个subloop并唤醒
+    int wakeupFd_; // 使用eventfd创建，当mainloop获取一个新用户的channel，使用轮询选择一个subloop并唤醒
     std::unique_ptr<Channel> wakeupChannel_;
 
     ChannelList activeChannels_;
-    Channel *currentActiveChannel_;
 
 public:
     eventLoop();
