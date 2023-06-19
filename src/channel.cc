@@ -48,7 +48,7 @@ void Channel::tie(const std::shared_ptr<void> &obj)
 void Channel::remove()
 {
     // TO DO
-    // loop_->removeChannel(this);
+    loop_->removeChannel(this);
 }
 
 // 当改变channel所表示的events事件后，update负责在epoller里面更改fd相应的事件epoll_ctl
@@ -57,7 +57,7 @@ void Channel::update()
 {
     // 通过channel所属的eventloop，调用epoller的响应方法，注册fd的events事件
     // TO DO:
-    // loop_->updateChannel(this);
+    loop_->updateChannel(this);
 }
 
 // 根据epoller监听的channel发生的具体时间，由channel负责调用具体的回调操作
